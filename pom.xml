@@ -85,7 +85,7 @@
 
     <!--
     # ===============================================================
-    # SECTION 6: mANAGEMENT OF BUILD PLUGINS
+    # SECTION 6: MANAGEMENT OF BUILD PLUGINS
     # ===============================================================
     # Central place to define and manage versions of build plugins used across all modules.
     -->
@@ -105,7 +105,17 @@
         </pluginManagement>
     </build>
 
+    <!--
+    # ===============================================================
+    # SECTION 7: EXTENDED REPOSITORIES
+    # ===============================================================
+    # Additional repositories for resolving dependencies and plugins.
+    -->
     <repositories>
+        <!--
+        # Add repository for Spring Milestone releases.
+        # Some Spring Cloud versions are only available as milestones.
+        -->
         <repository>
             <id>spring-milestones</id>
             <name>Spring Milestones</name>
@@ -115,6 +125,10 @@
             </snapshots>
         </repository>
     </repositories>
+    <!--
+    # Add repository for Spring Milestone releases.
+    # This section is specifically for plugins.
+    -->
     <pluginRepositories>
         <pluginRepository>
             <id>spring-milestones</id>
