@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!--
+    # Maven project version
+    -->
+    <modelVersion>4.0.0</modelVersion>
+    <!--
+    # ===============================================================
+    # SECTION 1: BASIC PROJECT COORDINATES (GAV)
+    # Unic address of the project in the repository
+    # ===============================================================
+    -->
+    <groupId>sk.taxesBestFriend</groupId>
+    <artifactId>taxes-best-friend-parent</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <!--
+    # ===============================================================
+    # SECTION 2: TYP OF PROJECT AND METADATA
+    # ===============================================================
+    # Name and description for better project identification
+    -->
+    <name>Taxes Best Friend - Parent</name>
+    <description>Parent project for Taxes Best Friend.</description>
+
+    <!--
+    # THIS IS ONLY FOR PARENT PROJECTS
+    -->
+    <packaging>pom</packaging>
+    <!--
+    # ===============================================================
+    # SECTION 3: CENTRAL CONFIGURATION (PROPERTIES, DEPENDENCY MANAGEMENT, PLUGIN MANAGEMENT)
+    # ===============================================================
+    # Central place to define versions, dependencies and plugins
+    # used by all submodules (child projects).
+    # This ensures consistency across all modules.
+    -->
+    <properties>
+        <java.version>21</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring.boot.version>3.5.6</spring.boot.version>
+        <spring.cloud.version>2024.0.3</spring.cloud.version>
+        <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
+    </properties>
+
+    <!--
+    # ===============================================================
+    # SECTION 4: LIST OF MODULES (MIKROSERVICES)
+    # ===============================================================
+    # List of all submodules (child projects) that are part of this multi-module project.
+    -->
+    <modules>
+        <module>api-gateway</module>
+    </modules>
+
+    <!--
+    # ===============================================================
+    # SECTION 5: DEPENDENCY MANAGEMENT
+    # ===============================================================
+    # Central place to define and manage versions of dependencies used across all modules.
+    # This ensures that all modules use the same version of a dependency.
+    -->
+    <dependencyManagement>
+        <dependencies>
+            <!--   Imports a list of all compatible libraries for Spring Boot.  -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!--   Imports a list of all compatible libraries for Spring Cloud.  -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring.cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <!--
+    # ===============================================================
+    # SECTION 6: mANAGEMENT OF BUILD PLUGINS
+    # ===============================================================
+    # Central place to define and manage versions of build plugins used across all modules.
+    -->
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler-plugin.version}</version>
+                    <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+</project>

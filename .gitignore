@@ -1,0 +1,14 @@
+# Zkompilovaný Java output
+/target/
+
+# Súbory IDE
+.idea/
+*.iml
+
+# Logy a dočasné súbory
+*.log
+
+# Maven wrapper (nepotrebujeme ho v multi-module štruktúre)
+.mvn/
+mvnw
+mvnw.cmd
