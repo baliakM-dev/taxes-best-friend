@@ -4,6 +4,7 @@
 # Súbory IDE
 .idea/
 *.iml
+secrets/
 
 # Logy a dočasné súbory
 *.log

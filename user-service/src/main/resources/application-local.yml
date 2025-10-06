@@ -1,0 +1,7 @@
+KEYCLOAK_ISSUER_URI: http://localhost:8180/realms/tbf-app
+KEYCLOAK_USER_CLIENT_ID: user-service-client
+KEYCLOAK_CLIENT_SECRET: cCvqoKyrTMd4z7Ila8ihCOE9YIYFpBCj
+KEYCLOACK_SERVER_URL: http://localhost:8180
+DB_URL: jdbc:postgresql://localhost:5433/user_service_db
+DB_USERNAME: user_service_user
+DB_PASSWORD: user_service_password # Heslo, ktoré sme si nastavili v secrets/

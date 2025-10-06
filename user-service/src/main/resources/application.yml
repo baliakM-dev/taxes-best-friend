@@ -1,0 +1,65 @@
+# ===================================================================
+# ZÁKLADNÁ (DEFAULT) KONFIGURÁCIA
+# ===================================================================
+spring:
+  application:
+    name: user-service
+  # Predvolene aktivujeme 'dev' profil
+  profiles:
+    active: dev
+    include: local
+
+  security:
+    oauth2:
+      resource server:
+        jwt:
+          issuer-uri: ${KEYCLOAK_ISSUER_URI}
+        # Spring automaticky vytvorí JwtDecoder na základe tejto adresy.
+          # Hodnota sa načíta z premennej definovanej v aktívnom profile.
+#          issuer-uri: http://localhost:8180/realms/tbf-app
+server:
+  port: 8083 # Zmenil som port podľa vášho návrhu
+
+# Konfigurácia pre Swagger/OpenAPI
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+# ===================================================================
+# DEBUG LOGOVANIE PRE BEZPEČNOSŤ
+# ===================================================================
+logging:
+  level:
+    # Zobrazí detailné rozhodnutia, ktoré robí Spring Security
+    org.springframework.security: DEBUG
+    # Zobrazí, ako Gateway spracúva požiadavky
+    org.springframework.cloud.gateway: TRACE
+
+---
+# ===================================================================
+# PROFIL 'dev' - PRE VÝVOJ V INTELLIJ
+# ===================================================================
+spring:
+  config:
+    activate:
+      on-profile: "dev"
+
+  datasource:
+    # TOTO JE KĽÚČOVÁ ZMENA:
+    # Aplikácia (v IntelliJ) sa pripája na localhost a port 5433,
+    # ktorý Docker Compose mapuje na kontajner user-service-db.
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update # Pre lokalny vyvoj
+
+# Premenné pre Admin klienta (pre registráciu)
+keycloak:
+  admin:
+    server-url: ${KEYCLOACK_SERVER_URL}
+    realm: tbf-app
+    client-id: ${KEYCLOAK_USER_CLIENT_ID}
+    client-secret: ${KEYCLOAK_CLIENT_SECRET}

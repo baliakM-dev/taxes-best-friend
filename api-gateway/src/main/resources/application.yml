@@ -1,0 +1,57 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+
+  # Stále potrebujeme, aby brána vedela, ako spustiť prihlasovací proces
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: tbf-app-client
+            client-secret: DkNwvvZ3nuVjClWmExnp3cBkLeBrqvD2 # Načítané z env. premennej
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope: openid, profile, email
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8180/realms/tbf-app
+
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+          # ================================================================
+          # PRAVIDLO PRE VEREJNÉ CESTY
+          # ================================================================
+          - id: public-routes
+            # Smerujeme na user-service (bežiaci v IDE na porte 8083)
+            uri: http://localhost:8083
+            predicates:
+              # Toto pravidlo sa aktivuje pre ktorúkoľvek z týchto ciest
+              - Path=/api/public/**, /api/admin/**
+            # Všimnite si: ŽIADNY TokenRelay filter! Pre verejné cesty ho nepotrebujeme.
+
+          # ================================================================
+          # PRAVIDLO PRE CHRÁNENÉ CESTY
+          # ================================================================
+          - id: private-routes
+            # Smerujeme na ten istý user-service
+            uri: http://localhost:8083
+            predicates:
+              # Toto pravidlo sa aktivuje pre cesty ako /api/users/me, /api/admin/...
+              - Path=/api/users/**
+            filters:
+              # TU JE TokenRelay NEVYHNUTNÝ!
+              # Automaticky pripojí token prihláseného používateľa.
+              - TokenRelay=
+
+# Zapneme DEBUG logovanie pre lepšiu diagnostiku
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.cloud.gateway: TRACE
