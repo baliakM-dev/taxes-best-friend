@@ -50,6 +50,11 @@ spring:
               # Automaticky pripojí token prihláseného používateľa.
               - TokenRelay=
 
+keycloak:
+  logout:
+    # URL, kam Keycloak presmeruje používateľa po úspešnom odhlásení.
+    # Táto adresa MUSÍ byť povolená v "Valid Post Logout Redirect URIs" v Keycloak klientovi.
+    post_logout_redirect_uri: http://localhost:8080/api/public/register
 # Zapneme DEBUG logovanie pre lepšiu diagnostiku
 logging:
   level:
