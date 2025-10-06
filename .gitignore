@@ -5,7 +5,7 @@
 .idea/
 *.iml
 secrets/
-
+.env
 # Logy a dočasné súbory
 *.log
 
